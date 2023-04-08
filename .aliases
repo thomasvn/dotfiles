@@ -1,0 +1,17 @@
+alias vscode='open . -a "Visual Studio Code"'
+alias acs='acs | less'
+alias t='trash'
+alias kc='cd ~/kubecost'
+alias tf='terraform'
+alias e='export'
+
+# https://www.felixparadis.com/posts/how-to-set-the-default-browser-from-the-command-line-on-a-mac/
+alias dbs='defaultbrowser safari'
+alias dbf='defaultbrowser firefox'
+alias sf='osascript ~/.scripts/defaultbrowser.scpt safari'
+alias ff='osascript ~/.scripts/defaultbrowser.scpt firefox'
+alias br='osascript ~/.scripts/defaultbrowser.scpt browser'
+
+# https://unix.stackexchange.com/questions/159253/decoding-url-encoding-percent-encoding
+alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))"'
+alias urlencode='python3 -c "import sys, urllib.parse as ul; print (ul.quote_plus(sys.argv[1]))"'
