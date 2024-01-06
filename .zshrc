@@ -24,6 +24,7 @@ export PATH="${PATH}:${HOME}/.krew/bin"
 export PATH="${PATH}:/Users/thomasnguyen/Library/Python/3.11/bin"
 export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
+export PATH="${PATH}:/Users/thomasnguyen/.cargo/bin"
 
 # SCRIPTS & ALIASES
 source $ZSH/oh-my-zsh.sh

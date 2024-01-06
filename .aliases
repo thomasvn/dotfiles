@@ -4,6 +4,8 @@ alias t='trash'
 alias kc='cd ~/kubecost'
 alias tf='terraform'
 alias e='export'
+alias kx='kubectl ctx'
+alias kns='kubens'
 
 # https://www.felixparadis.com/posts/how-to-set-the-default-browser-from-the-command-line-on-a-mac/
 alias dbs='defaultbrowser safari'
