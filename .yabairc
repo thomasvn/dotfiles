@@ -1,0 +1,5 @@
+# Yabai - macOS window tiling manager (https://github.com/koekeishiya/yabai)
+
+# Scripting addition
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa

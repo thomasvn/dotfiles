@@ -1,11 +1,18 @@
 alias code='open . -a "Visual Studio Code"'
+alias cur='open . -a "Cursor"'
 alias acs='acs | less'
 alias t='trash'
 alias kc='cd ~/kubecost'
+alias kch='cd ~/kubecost/cost-analyzer-helm-chart'
+alias kcm='cd ~/kubecost/cost-model/kubecost-cost-model'
+alias oc='cd ~/kubecost/cost-model/opencost'
+alias kcc='cd ~/kubecost/clusters'
 alias tf='terraform'
 alias e='export'
 alias kx='kubectl ctx'
 alias kns='kubens'
+alias kdpi='kubectl describe pods | rg "Image:"'
+alias curltime="curl -w \"@$HOME/.curl-format.txt\" -s "
 
 # https://www.felixparadis.com/posts/how-to-set-the-default-browser-from-the-command-line-on-a-mac/
 alias dbs='defaultbrowser safari'
@@ -24,4 +31,43 @@ jwtd() {
          jq -R 'split(".") | .[0],.[1] | @base64d | fromjson' <<< "${1}"
          echo "Signature: $(echo "${1}" | awk -F'.' '{print $3}')"
     fi
+}
+
+# ------------------------------------------------------------------------------
+# Kubecost Ops
+# ------------------------------------------------------------------------------
+
+klcm() {
+  podName=`kubectl get pods -l app=cost-analyzer -o jsonpath='{.items[0].metadata.name}'`
+  kubectl logs $podName | less
+}
+
+klagg() {
+  podName="$(kubectl get pods -l app=aggregator -o jsonpath='{.items[0].metadata.name}')"
+  kubectl logs $podName | less
+}
+
+kpfprom() {
+  podName="$(kubectl get pods -l app=prometheus -o jsonpath='{.items[0].metadata.name}')"
+  kubectl port-forward $podName 9080:9090
+}
+
+kpfkcm() {
+  podName="$(kubectl get pods -l app=cost-analyzer -o jsonpath='{.items[0].metadata.name}')"
+  kubectl port-forward $podName 9003:9003
+}
+
+kpfagg() {
+  svcName="$(kubectl get svc -l app=aggregator -o jsonpath='{.items[0].metadata.name}')"
+  kubectl port-forward svc/$svcName 9004:9004
+}
+
+keticm() {
+  podName=`kubectl get pods -l app=cost-analyzer -o jsonpath='{.items[0].metadata.name}'`
+  kubectl exec -it $podName sh
+}
+
+ketiagg() {
+  podName=`kubectl get pods -l app=aggregator -o jsonpath='{.items[0].metadata.name}'`
+  kubectl exec -it $podName sh
 }
