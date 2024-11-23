@@ -1,7 +1,7 @@
 # THEME
 ZSH_THEME="refined"
 
-# PLUGINS
+# OMZ PLUGINS
 plugins=(
   aliases
   aws
@@ -30,14 +30,12 @@ export PATH="${PATH}:/Users/thomasnguyen/.cargo/bin"
 source $ZSH/oh-my-zsh.sh
 source ~/.aliases
 
-# KUBECTL PROMPT
-RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
+# KUBERNETES
+if [ -s "$(command -v kubecolor)" ]; then
+  alias kubectl="kubecolor"
+  compdef kubecolor=kubectl
+  alias watch='KUBECOLOR_FORCE_COLORS=true watch --color '
+fi
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-
-# COMMAND COMPLETIONS
-[[ $commands[kubectl] ]] && source <(kubectl completion zsh)  # kubectl
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 if [ -f '/Users/thomasnguyen/.google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/thomasnguyen/.google-cloud-sdk/completion.zsh.inc'; fi  # gcloud
-
-# SHELL
-# eval "$(starship init zsh)"
-
