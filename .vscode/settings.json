@@ -1,0 +1,62 @@
+{
+  // Editor general settings
+  "editor.inlineSuggest.enabled": true,
+  "editor.rulers": [80, 120],
+
+  // Code Formatting
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.printWidth": 80,
+  "prettier.proseWrap": "always",
+
+  // Git settings
+  "git.openRepositoryInParentFolders": "never",
+
+  // Extension settings
+  "extensions.ignoreRecommendations": true,
+  "redhat.telemetry.enabled": false,
+
+  // Theme settings
+  "workbench.colorTheme": "Default Dark Modern",
+  "markdown-preview-github-styles.colorTheme": "system",
+
+  // Language-specific settings
+  "[go]": {
+    "editor.insertSpaces": false,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "go.toolsManagement.autoUpdate": true,
+    "go.testTimeout": "10m"
+  },
+
+  "[helm]": {
+    "editor.autoSurround": "never",
+    "editor.autoClosingBrackets": "never",
+    "editor.autoClosingOvertype": "never"
+  },
+
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+  "[terraform-vars]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+
+  "[markdown]": {
+    "editor.unicodeHighlight.ambiguousCharacters": true,
+    "editor.unicodeHighlight.invisibleCharacters": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+    }
+  }
+}
