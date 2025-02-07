@@ -22,9 +22,9 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 if [ -f '/Users/thomasnguyen/.google-cloud-sdk/path.zsh.inc' ]; then . '/Users/thomasnguyen/.google-cloud-sdk/path.zsh.inc'; fi
 export PATH="${PATH}:${HOME}/.krew/bin"
 export PATH="${PATH}:/Users/thomasnguyen/Library/Python/3.11/bin"
-export GOPATH="$HOME/go"
-export PATH="$PATH:$GOPATH/bin"
+export PATH="${PATH}:${HOME}/go/bin"
 export PATH="${PATH}:/Users/thomasnguyen/.cargo/bin"
+export PATH="${PATH}:/opt/homebrew/share/google-cloud-sdk/bin"
 
 # SCRIPTS & ALIASES
 source $ZSH/oh-my-zsh.sh
@@ -39,3 +39,4 @@ fi
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 if [ -f '/Users/thomasnguyen/.google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/thomasnguyen/.google-cloud-sdk/completion.zsh.inc'; fi  # gcloud
+export KUBECONFIG="./.kubeconfig:${HOME}/.kube/config"  # Prioritize local kubeconfig
