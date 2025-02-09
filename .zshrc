@@ -8,12 +8,6 @@ plugins=(
   fzf
   git
   kubectl
-  ##### EXTERNAL #####
-  alias-tips
-  zsh-autosuggestions
-  # zsh-completions
-  zsh-kubectl-prompt
-  zsh-syntax-highlighting
 )
 
 # PATH
@@ -25,6 +19,7 @@ export PATH="${PATH}:/Users/thomasnguyen/Library/Python/3.11/bin"
 export PATH="${PATH}:${HOME}/go/bin"
 export PATH="${PATH}:/Users/thomasnguyen/.cargo/bin"
 export PATH="${PATH}:/opt/homebrew/share/google-cloud-sdk/bin"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 # SCRIPTS & ALIASES
 source $ZSH/oh-my-zsh.sh
