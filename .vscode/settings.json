@@ -31,6 +31,16 @@
     "go.testTimeout": "10m"
   },
 
+  // https://github.com/microsoft/vscode-black-formatter
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+
+  "[yaml]": {
+    "editor.formatOnSave": true,
+  },
+
   "[helm]": {
     "editor.autoSurround": "never",
     "editor.autoClosingBrackets": "never",
@@ -58,5 +68,8 @@
       "strings": "off",
       "other": "off"
     }
-  }
+  },
+
+  "cursor.aipreview.enabled": true,
+  "cursor.terminal.usePreviewBox": true
 }
