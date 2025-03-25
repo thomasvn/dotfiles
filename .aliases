@@ -8,6 +8,9 @@ alias kns='kubens'
 alias kdpi='kubectl describe pods | rg "Image:"'
 alias curltime="curl -w \"@$HOME/.curl-format.txt\" -s "
 
+# https://x.com/_bmacd/status/1891258261204025435 
+alias o='ollama run qwen2.5-coder "Provide only the MacOS terminal command (without markdown) to: $*"'
+
 # https://www.felixparadis.com/posts/how-to-set-the-default-browser-from-the-command-line-on-a-mac/
 alias dbs='defaultbrowser safari'
 alias dbf='defaultbrowser firefox'
