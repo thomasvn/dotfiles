@@ -61,20 +61,10 @@ kpfagg() {
 
 keticm() {
   podName=`kubectl get pods -l app=cost-analyzer -o jsonpath='{.items[0].metadata.name}'`
-  kubectl exec -it $podName sh
+  kubectl exec -it $podName -- sh
 }
 
 ketiagg() {
   podName=`kubectl get pods -l app=aggregator -o jsonpath='{.items[0].metadata.name}'`
-  kubectl exec -it $podName sh
-}
-
-ketiagglsw () {
-  podName="$(kubectl get pods -l app=aggregator -o jsonpath='{.items[0].metadata.name}')"
-  KUBECOLOR_FORCE_COLORS=true watch --color kubecolor exec -it "$podName" -c aggregator -- ls -lah /var/configs/waterfowl/duckdb/v0_10_3
-}
-
-keticmlsw () {
-  podName=`kubectl get pods -l app=cost-analyzer -o jsonpath='{.items[0].metadata.name}'`
-  KUBECOLOR_FORCE_COLORS=true watch --color kubecolor exec -it "$podName" -c aggregator -- ls -lah /var/configs/waterfowl/duckdb/v0_10_3
+  kubectl exec -it $podName -- sh
 }
