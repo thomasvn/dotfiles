@@ -1,9 +1,10 @@
 {
   // Editor general settings
   "editor.inlineSuggest.enabled": true,
-  "editor.rulers": [80, 120],
+  "editor.rulers": [80, 100, 120],
 
   // Code Formatting
+  "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.printWidth": 80,
   "prettier.proseWrap": "always",
@@ -21,24 +22,27 @@
 
   // Language-specific settings
   "[go]": {
+    "editor.defaultFormatter": "golang.go",
     "editor.insertSpaces": false,
-    "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.organizeImports": "explicit"
-    },
-    "editor.suggest.snippetsPreventQuickSuggestions": false,
-    "go.toolsManagement.autoUpdate": true,
-    "go.testTimeout": "10m"
+    }
   },
+  "go.formatTool": "custom",
+  "go.alternateTools": {
+    "customFormatter": "golines"
+  },
+  "go.formatFlags": ["--max-len=180", "--base-formatter=goimports"],
+  "go.useLanguageServer": true,
+  "gopls": {
+    "formatting.gofumpt": true
+  },
+  "go.toolsManagement.autoUpdate": true,
+  "go.testTimeout": "10m",
 
   // https://github.com/microsoft/vscode-black-formatter
   "[python]": {
-    "editor.formatOnSave": true,
     "editor.defaultFormatter": "ms-python.black-formatter"
-  },
-
-  "[yaml]": {
-    "editor.formatOnSave": true,
   },
 
   "[helm]": {
@@ -49,12 +53,10 @@
 
   "[terraform]": {
     "editor.defaultFormatter": "hashicorp.terraform",
-    "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file"
   },
   "[terraform-vars]": {
     "editor.defaultFormatter": "hashicorp.terraform",
-    "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file"
   },
 
@@ -70,6 +72,5 @@
     }
   },
 
-  "cursor.aipreview.enabled": true,
   "cursor.terminal.usePreviewBox": true
 }
