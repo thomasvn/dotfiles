@@ -4,7 +4,6 @@ ZSH_THEME="refined"
 # OMZ PLUGINS
 plugins=(
   aliases
-  aws
   fzf
   git
   kubectl

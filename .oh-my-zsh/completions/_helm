@@ -1,5 +1,6 @@
 # mkdir -p ~/.oh-my-zsh/completions
 # helm completion zsh > ~/.oh-my-zsh/completions/_helm
+# https://zsh.sourceforge.io/Doc/Release/Completion-System.html
 
 #compdef helm
 compdef _helm helm
