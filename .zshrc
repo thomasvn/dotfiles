@@ -13,16 +13,15 @@ plugins=(
 # PATH
 export ZSH="$HOME/.oh-my-zsh"
 eval "$(/opt/homebrew/bin/brew shellenv)"
-if [ -f '/Users/thomasnguyen/.google-cloud-sdk/path.zsh.inc' ]; then . '/Users/thomasnguyen/.google-cloud-sdk/path.zsh.inc'; fi
+if [ -f "$HOME/.google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/.google-cloud-sdk/path.zsh.inc"; fi
 export PATH="${PATH}:${HOME}/.krew/bin"
-export PATH="${PATH}:/Users/thomasnguyen/Library/Python/3.11/bin"
+export PATH="${PATH}:${HOME}/Library/Python/3.11/bin"
 export PATH="${PATH}:${HOME}/go/bin"
-export PATH="${PATH}:/Users/thomasnguyen/.cargo/bin"
+export PATH="${PATH}:${HOME}/.cargo/bin"
 export PATH="${PATH}:/opt/homebrew/share/google-cloud-sdk/bin"
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+export PATH="${PATH}:/opt/homebrew/opt/libpq/bin"
 
 # SCRIPTS & ALIASES
-source $ZSH/oh-my-zsh.sh
 source ~/.aliases
 
 # KUBERNETES
