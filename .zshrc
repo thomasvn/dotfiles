@@ -19,3 +19,8 @@ if (( $+commands[kubecolor] )); then
   compdef kubecolor=kubectl
   alias watch='KUBECOLOR_FORCE_COLORS=true watch --color '
 fi
+
+# Dotfiles daily sync
+if [ -z "$(find ~/code/dotfiles/.git/last-sync -mtime -1 2>/dev/null)" ]; then
+  touch ~/code/dotfiles/.git/last-sync && (~/code/dotfiles/sync.sh >/dev/null 2>&1 &)
+fi
