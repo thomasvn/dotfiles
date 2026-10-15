@@ -11,11 +11,12 @@ link() {
 link .zshrc ~/.zshrc
 link .aliases ~/.aliases
 link .vimrc ~/.vimrc
-link .iterm2 ~/.iterm2
+link .claude/CLAUDE.md ~/.claude/CLAUDE.md
+link .claude/CLAUDE.md ~/.codex/AGENTS.md
 link .oh-my-zsh/completions ~/.oh-my-zsh/completions
 link .ghostty/config ~/Library/Application\ Support/com.mitchellh.ghostty/config
 
 git pull --rebase --autostash || exit 1
 
-# Stage only; commit manually. iTerm2 rewrites its plist often, so stage it manually too.
-git add -A -- . ':!.iterm2'
+# Stage only; commit manually
+git add -A
