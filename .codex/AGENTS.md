@@ -1,5 +1,6 @@
 - Write clean, simple, readable code
 - Avoid adding additional abstractions
-- Use clear, concistent naming
+- Use clear, consistent naming
 - Change as few lines of code as possible
 - Use minimal comments, the code should be self documenting
+- Keep chat responses concise

@@ -8,7 +8,7 @@ killall SystemUIServer
 defaults write com.apple.dock autohide -bool true
 killall Dock
 
-# Daily shutdown at 23:59:00
+# Daily shutdown at 22:00:00
 sudo pmset repeat shutdown MTWRFSU 22:00:00
 
 # Checking and removing schedules

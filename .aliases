@@ -1,15 +1,17 @@
 alias code='open . -a "Visual Studio Code"'
 alias cur='open . -a "Cursor"'
+alias zed='open . -a "Zed"'
 alias als='als | less'
 alias t='trash'
 alias e='export'
 alias kx='kubectl ctx'
 alias kns='kubens'
 alias kdpi='kubectl describe pods | rg "Image:"'
-alias curltime="curl -w \"@$HOME/.curl-format.txt\" -s "
+alias curltime='curl -so /dev/null -w "dns %{time_namelookup}s  connect %{time_connect}s  tls %{time_appconnect}s  ttfb %{time_starttransfer}s  total %{time_total}s\n"'
 
-# https://x.com/_bmacd/status/1891258261204025435 
-alias o='ollama run qwen2.5-coder "Provide only the MacOS terminal command (without markdown) to: $*"'
+# https://x.com/_bmacd/status/1891258261204025435
+o() { ollama run qwen2.5-coder "Provide only the MacOS terminal command (without markdown) to: $*"; }
+alias ol='~/code/ollama/cli-query.sh'
 
 # https://www.felixparadis.com/posts/how-to-set-the-default-browser-from-the-command-line-on-a-mac/
 alias dbs='defaultbrowser safari'
@@ -20,51 +22,22 @@ alias br='osascript ~/.scripts/defaultbrowser.scpt browser'
 
 # https://unix.stackexchange.com/questions/159253/decoding-url-encoding-percent-encoding
 alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))"'
-alias urlencode='python3 -c "import sys, urllib.parse as ul; print (ul.quote_plus(sys.argv[1]))"'
+alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]))"'
 
 # https://prefetch.net/blog/2020/07/14/decoding-json-web-tokens-jwts-from-the-linux-command-line/
 jwtd() {
-    if [[ -x $(command -v jq) ]]; then
-         jq -R 'split(".") | .[0],.[1] | @base64d | fromjson' <<< "${1}"
-         echo "Signature: $(echo "${1}" | awk -F'.' '{print $3}')"
-    fi
+  jq -R 'split(".") | .[0],.[1] | @base64d | fromjson' <<< "$1"
+  echo "Signature: $(echo "$1" | cut -d. -f3)"
 }
 
-# ------------------------------------------------------------------------------
-# Kubecost Ops
-# ------------------------------------------------------------------------------
-
-klcm() {
-  podName=`kubectl get pods -l app=cost-analyzer -o jsonpath='{.items[0].metadata.name}'`
-  kubectl logs $podName | less
-}
-
-klagg() {
-  podName="$(kubectl get pods -l app=aggregator -o jsonpath='{.items[0].metadata.name}')"
-  kubectl logs $podName | less
-}
-
-kpfprom() {
-  podName="$(kubectl get pods -l app=prometheus -o jsonpath='{.items[0].metadata.name}')"
-  kubectl port-forward $podName 9080:9090
-}
-
-kpfkcm() {
-  podName="$(kubectl get pods -l app=cost-analyzer -o jsonpath='{.items[0].metadata.name}')"
-  kubectl port-forward $podName 9003:9003
-}
-
-kpfagg() {
-  svcName="$(kubectl get svc -l app=aggregator -o jsonpath='{.items[0].metadata.name}')"
-  kubectl port-forward svc/$svcName 9004:9004
-}
-
-keticm() {
-  podName=`kubectl get pods -l app=cost-analyzer -o jsonpath='{.items[0].metadata.name}'`
-  kubectl exec -it $podName -- sh
-}
-
-ketiagg() {
-  podName=`kubectl get pods -l app=aggregator -o jsonpath='{.items[0].metadata.name}'`
-  kubectl exec -it $podName -- sh
-}
+# Kubecost
+_pod() { kubectl get pods -l app="$1" -o jsonpath='{.items[0].metadata.name}'; }
+klcm()    { kubectl logs "$(_pod cost-analyzer)" | less; }
+klagg()   { kubectl logs "$(_pod aggregator)" | less; }
+kpfprom() { kubectl port-forward "$(_pod prometheus)" 9080:9090; }
+kpfkcm()  { kubectl port-forward "$(_pod cost-analyzer)" 9003:9003; }
+kpfagg()  { kubectl port-forward "svc/$(kubectl get svc -l app=aggregator -o jsonpath='{.items[0].metadata.name}')" 9004:9004; }
+keticm()  { kubectl exec -it "$(_pod cost-analyzer)" -- bash; }
+ketiagg() { kubectl exec -it "$(_pod aggregator)" -- bash; }
+ketiagglsw() { KUBECOLOR_FORCE_COLORS=true watch --color kubecolor exec -it "$(_pod aggregator)" -c aggregator -- ls -lah /var/configs/waterfowl/duckdb/v0_10_3; }
+keticmlsw()  { KUBECOLOR_FORCE_COLORS=true watch --color kubecolor exec -it "$(_pod cost-analyzer)" -c aggregator -- ls -lah /var/configs/waterfowl/duckdb/v0_10_3; }

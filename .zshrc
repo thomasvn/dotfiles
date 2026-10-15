@@ -1,35 +1,21 @@
-# THEME
+export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="refined"
-
-# OMZ PLUGINS
-plugins=(
-  aliases
-  fzf
-  git
-  kubectl
-)
+plugins=(aliases fzf git kubectl)
 
 # PATH
-export ZSH="$HOME/.oh-my-zsh"
 eval "$(/opt/homebrew/bin/brew shellenv)"
-if [ -f "$HOME/.google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/.google-cloud-sdk/path.zsh.inc"; fi
-export PATH="${PATH}:${HOME}/.krew/bin"
-export PATH="${PATH}:${HOME}/Library/Python/3.11/bin"
-export PATH="${PATH}:${HOME}/go/bin"
-export PATH="${PATH}:${HOME}/.cargo/bin"
-export PATH="${PATH}:/opt/homebrew/share/google-cloud-sdk/bin"
-export PATH="${PATH}:/opt/homebrew/opt/libpq/bin"
+[ -f "$HOME/.google-cloud-sdk/path.zsh.inc" ] && . "$HOME/.google-cloud-sdk/path.zsh.inc"
+export PATH="$HOME/.local/bin:$HOME/.krew/bin:$HOME/go/bin:$HOME/.cargo/bin:$HOME/.deno/bin:$HOME/Library/Python/3.11/bin:/opt/homebrew/opt/libpq/bin:$PATH"
 
-# SCRIPTS & ALIASES
+source "$ZSH/oh-my-zsh.sh"
 source ~/.aliases
 
-# KUBERNETES
-if [ -s "$(command -v kubecolor)" ]; then
+# Kubernetes
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+export KUBECONFIG="./.kubeconfig:$HOME/.kube/config"  # Prefer local kubeconfig
+[ -f "$HOME/.google-cloud-sdk/completion.zsh.inc" ] && . "$HOME/.google-cloud-sdk/completion.zsh.inc"
+if (( $+commands[kubecolor] )); then
   alias kubectl="kubecolor"
   compdef kubecolor=kubectl
   alias watch='KUBECOLOR_FORCE_COLORS=true watch --color '
 fi
-export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
-if [ -f '/Users/thomasnguyen/.google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/thomasnguyen/.google-cloud-sdk/completion.zsh.inc'; fi  # gcloud
-export KUBECONFIG="./.kubeconfig:${HOME}/.kube/config"  # Prioritize local kubeconfig

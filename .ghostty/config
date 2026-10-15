@@ -1,0 +1,28 @@
+# https://ghostty.org/docs/config/reference
+# https://ghostty.zerebos.com/
+
+# Open new windows filling the screen, but as a NORMAL window:
+# stays on the current desktop/Space, keeps the menu bar and titlebar,
+# cmd+tab behaves normally. Not macOS native fullscreen.
+maximize = true
+
+# Only used if you un-maximize a window.
+window-height = 25
+window-width = 150
+
+keybind = super+left=previous_tab
+keybind = super+right=next_tab
+
+notify-on-command-finish = unfocused
+
+# Quick terminal: global hotkey drops a terminal over whatever app is focused.
+# Requires Accessibility permission for Ghostty.
+keybind = global:ctrl+grave_accent=toggle_quick_terminal
+
+# Left Option sends ESC+<key>, which is what zsh/readline bind word-motions to
+# (alt+f forward-word, alt+b backward-word, alt+. insert-last-word).
+# Right Option keeps macOS character composition, so é – π still work there.
+macos-option-as-alt = left
+
+# keybind = super+opt+left=previous_tab
+# keybind = super+opt+right=next_tab
