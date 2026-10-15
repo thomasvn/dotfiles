@@ -13,6 +13,7 @@ link .aliases ~/.aliases
 link .vimrc ~/.vimrc
 link .claude/CLAUDE.md ~/.claude/CLAUDE.md
 link .claude/CLAUDE.md ~/.codex/AGENTS.md
+link .claude/CLAUDE.md ~/.kiro/steering/AGENTS.md
 link .oh-my-zsh/completions ~/.oh-my-zsh/completions
 link .ghostty/config ~/Library/Application\ Support/com.mitchellh.ghostty/config
 
