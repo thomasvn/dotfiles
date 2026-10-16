@@ -4,17 +4,18 @@
   1. Readability: makes sense on first read; fewer lines, examples over explanation, comments only to explain why (workarounds, non-obvious constraints)
   2. Conciseness: fewer lines of code unless it hurts readability; no clever one-liners that need decoding
   3. Easy to debug and maintain: fail loudly with errors that say what went wrong and where to look; log key decisions (e.g. resolved inputs); make tracing easy to turn on
-- Avoid adding additional abstractions; don't create a function, helper, or variable used only once — inline it and comment if the intent needs explaining
-- Keep architecture minimal and simple; prefer fewer files, tools, and moving parts
+- Minimal architecture: no extra abstractions; prefer fewer files, tools, and moving parts; don't create a function, helper, or variable used only once — inline it and comment if the intent needs explaining
 - Use clear, consistent naming
 - Change as few lines of code as possible
 - **Keep the `git diff` minimal: touch only what the fix needs, no drive-by refactors.**
 - Python: after editing, run `ruff format` and `ruff check` on changed files and fix findings
 - Keep chat responses concise
 - Never run any git command without explicit permission
-- PRs: very concise, follow the repo's PR template if one exists, never restate what the diff shows
-- PR titles: plain language, under 8 words, no "fix:", "ci:", "break:", "chore:", "feat:" style prefixes
 - Never attribute commits or PR descriptions to an AI agent (no Co-Authored-By, no "Generated with" lines)
+- PRs:
+  - Title: plain language, under 8 words, no "fix:", "ci:", "break:", "chore:", "feat:" style prefixes
+  - Body very concise; follow the repo's PR template if one exists; never restate what the diff shows
+  - When possible, show test evidence (before/after output), with enough tests that the result is irrefutable
 - Never comment, reply, or review on GitHub on my behalf; draft the text in chat for me to post
 - Temporary `*.test.sh` files are fine for local validation; delete them and any references before finishing, never commit them
 
