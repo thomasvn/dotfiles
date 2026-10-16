@@ -5,24 +5,30 @@ plugins=(aliases aws fzf git kubectl)
 # PATH
 eval "$(/opt/homebrew/bin/brew shellenv)"
 [ -f "$HOME/.google-cloud-sdk/path.zsh.inc" ] && . "$HOME/.google-cloud-sdk/path.zsh.inc"
-export PATH="$HOME/.local/bin:$HOME/.krew/bin:$HOME/go/bin:$HOME/.cargo/bin:$HOME/.deno/bin:$HOME/Library/Python/3.11/bin:/opt/homebrew/opt/libpq/bin:/opt/homebrew/share/google-cloud-sdk/bin:$PATH"
-. "$HOME/.local/bin/env"
+path=(
+  ~/.local/bin
+  ~/.krew/bin
+  ~/go/bin
+  ~/.cargo/bin
+  ~/.deno/bin
+  ~/Library/Python/3.11/bin
+  /opt/homebrew/opt/libpq/bin
+  /opt/homebrew/share/google-cloud-sdk/bin
+  $path
+)
 
 source "$ZSH/oh-my-zsh.sh"
 source ~/.aliases
 
 # Languages
 export RUSTC_WRAPPER=~/.cargo/bin/sccache
-export CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 
 # Kubernetes
-export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 export KUBECONFIG="./.kubeconfig:$HOME/.kube/config:$HOME/.kube/config-apptio-clusters"  # Prefer local kubeconfig
 [ -f "$HOME/.google-cloud-sdk/completion.zsh.inc" ] && . "$HOME/.google-cloud-sdk/completion.zsh.inc"
-(( $+commands[kubectl] )) && source <(kubectl completion zsh)
 if (( $+commands[kubecolor] )); then
   alias kubectl="kubecolor"
   compdef kubecolor=kubectl
