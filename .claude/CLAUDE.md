@@ -35,7 +35,9 @@ Concise summary up front (root cause, evidence, next steps). Put full details �
 
 Keep PR titles short: a few words naming the change, no explanation.
 
-Never restate what the diff already shows. Write only what a reviewer cannot read off the code: why the change exists, non-obvious constraints, and what was verified. Examples belong here only if they show something the diff can't (e.g. test output), not a before/after of the change itself.
+Never restate what the diff already shows. Write only what a reviewer cannot read off the code: why the change exists, non-obvious constraints, and what was verified. Examples belong here only if they show something the diff can't (e.g. test output), not a before/after of the code itself.
+
+When a change alters user-visible output (a message, report, log, UI), show a simple, clean BEFORE / AFTER of that output so readers grasp the change at a glance.
 
 No "Generated with Claude Code" footer or other AI attribution.
 
@@ -44,3 +46,11 @@ Follow the repo's PR template. Show test evidence as commands and real output, n
 Lead with why the change had to be made (the failure it fixes). Keep every section short; a reviewer should grasp the PR in under a minute.
 
 Default to very short PR notes: a 1–2 sentence Why and a 1–2 line Verification, about 60 words total. Skip feature walkthroughs, overlap tables, and raw command output unless a reviewer needs them to judge the change.
+
+## PR reviews
+
+Every review checks two things: bugs, and opportunities to simplify (per the Code priorities above). Report both, or say plainly that none were found.
+
+Review the PR head, not just local files. Prove each bug by running it (e.g. a failure-path test with a fake dependency), not by reading alone. Skip nitpicks.
+
+Draft the review in chat; never post it on GitHub.
