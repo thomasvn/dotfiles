@@ -53,4 +53,6 @@ Every review checks two things: bugs, and opportunities to simplify (per the Cod
 
 Review the PR head, not just local files. Prove each bug by running it (e.g. a failure-path test with a fake dependency), not by reading alone. Skip nitpicks.
 
+Call out edge cases, but label how likely each is: say plainly when one needs unusual, non-default config or rare conditions that users are unlikely to hit, and keep it separate from bugs that hit the default path.
+
 Draft the review in chat; never post it on GitHub.
