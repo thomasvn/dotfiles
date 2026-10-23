@@ -41,7 +41,7 @@ When a change alters user-visible output (a message, report, log, UI), show a si
 
 No "Generated with Claude Code" footer or other AI attribution.
 
-Follow the repo's PR template. Show test evidence as commands and real output, not claims.
+Follow the repo's PR template. Show test evidence as commands and real output, not claims. Put commands and output longer than 10 lines in a collapsible `<details>` block.
 
 Lead with why the change had to be made (the failure it fixes). Keep every section short; a reviewer should grasp the PR in under a minute.
 
@@ -56,3 +56,4 @@ Review the PR head, not just local files. Prove each bug by running it (e.g. a f
 Call out edge cases, but label how likely each is: say plainly when one needs unusual, non-default config or rare conditions that users are unlikely to hit, and keep it separate from bugs that hit the default path.
 
 Draft the review in chat; never post it on GitHub.
+
