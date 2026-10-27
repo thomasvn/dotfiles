@@ -47,6 +47,10 @@ Lead with why the change had to be made (the failure it fixes). Keep every secti
 
 Default to very short PR notes: a 1–2 sentence Why and a 1–2 line Verification, about 60 words total. Skip feature walkthroughs, overlap tables, and raw command output unless a reviewer needs them to judge the change.
 
+When making PR notes more concise, keep the visible text short but don't cut test evidence: detailed, meticulous testing notes (commands, real output, setup) are fine inside collapsed `<details>` dropdowns.
+
+When prepping a PR, work on providing irrefutable evidence that the change works as expected (e.g. before/after runs, end-to-end tests of the real paths it touches), and describe every test in the PR body.
+
 ## PR reviews
 
 Every review checks two things: bugs, and opportunities to simplify (per the Code priorities above). Report both, or say plainly that none were found.
