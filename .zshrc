@@ -49,3 +49,5 @@ export HOMEBREW_UPGRADE_RESTART_SERVICES=true
 if [ -z "$(find ~/code/dotfiles/.git/last-sync -mtime -1 2>/dev/null)" ]; then
   touch ~/code/dotfiles/.git/last-sync && (~/code/dotfiles/sync.sh >/dev/null 2>&1 &)
 fi
+# Added by Kiro CLI
+case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="${PATH:+$PATH:}$HOME/.local/bin" ;; esac

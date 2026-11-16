@@ -8,6 +8,7 @@
 - Use clear, consistent naming
 - Change as few lines of code as possible
 - **Keep the `git diff` minimal: touch only what the fix needs, no drive-by refactors.**
+- Tests: add to the existing test file for the source file under test (e.g. Go `foo.go` → `foo_test.go`); create a new test file only when none exists, never one per feature or PR
 - Python: after editing, run `ruff format` and `ruff check` on changed files and fix findings
 - Keep chat responses concise
 - Never run any git command without explicit permission
