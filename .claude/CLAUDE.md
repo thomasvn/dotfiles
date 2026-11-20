@@ -26,6 +26,8 @@ Be clear and concise. Prefer fewer words.
 
 Let examples do the talking — a code block, a screenshot, or a table beats a paragraph explaining the same thing. Cut preamble, restated context, and hedging. Prose should carry only what an example cannot.
 
+When referencing another PR, always use its full GitHub link, e.g. `[kubecost-cost-model#5242](https://github.com/kubecost/kubecost-cost-model/pull/5242)`, never a bare `kubecost-cost-model#5242` or `#5242`.
+
 Applies to everything: docs, comments, commit messages, PR descriptions, and chat replies.
 
 ## Investigation docs
@@ -46,11 +48,21 @@ Follow the repo's PR template. Show test evidence as commands and real output, n
 
 Lead with why the change had to be made (the failure it fixes). Keep every section short; a reviewer should grasp the PR in under a minute.
 
-Default to very short PR notes: a 1–2 sentence Why and a 1–2 line Verification, about 60 words total. Skip feature walkthroughs, overlap tables, and raw command output unless a reviewer needs them to judge the change.
+Open PRs as drafts. Keep the visible body extremely short so the reader stays with it:
+
+1. One sentence stating the problem.
+2. One sentence giving an example of the problem.
+3. A short description of the solution.
+
+Skip feature walkthroughs, overlap tables, and raw command output unless a reviewer needs them to judge the change.
+
+Make the body skimmable in seconds. Any supporting detail beyond those three points (stats, edge-case reasoning, why a risk is fine) goes in a collapsed `<details>` block, never in visible prose.
 
 When making PR notes more concise, keep the visible text short but don't cut test evidence: detailed, meticulous testing notes (commands, real output, setup) are fine inside collapsed `<details>` dropdowns.
 
 When prepping a PR, work on providing irrefutable evidence that the change works as expected (e.g. before/after runs, end-to-end tests of the real paths it touches), and describe every test in the PR body.
+
+In the Testing section, don't add a summary table or prose that recaps the tests. Make each test its own `<details>` dropdown whose `<summary>` is the one-line result, e.g. `<summary>kind, updateCaTrust on: BEFORE Init:Error, AFTER Running and trusts the test CA</summary>`. Put that test's setup, commands and output inside it.
 
 ## PR reviews
 
@@ -62,3 +74,6 @@ Call out edge cases, but label how likely each is: say plainly when one needs un
 
 Draft the review in chat; never post it on GitHub.
 
+# Skills
+
+Every skill you create or update in `~/.kiro/crew/skills/<name>/` must also be copied to `~/.kiro/skills/<name>/`, so that Kiro CLI can load it too. Keep both copies identical (`diff -r` shows no differences).
