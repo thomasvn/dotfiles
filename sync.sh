@@ -5,6 +5,7 @@ cd ~/code/dotfiles || exit 1
 # Back up a real file once, then replace it with a symlink to the repo
 link() {
   [ -e "$2" ] && [ ! -L "$2" ] && mv "$2" "$2.bak"
+  mkdir -p "$(dirname "$2")"
   ln -sfn ~/code/dotfiles/$1 "$2"
 }
 
@@ -15,9 +16,19 @@ link .claude/CLAUDE.md ~/.claude/CLAUDE.md
 link .claude/CLAUDE.md ~/.codex/AGENTS.md
 link .claude/CLAUDE.md ~/.kiro/steering/AGENTS.md
 link .claude/CLAUDE.md ~/.config/amp/AGENTS.md
+# Per skill, so Claude's account-managed skills/synced stays out of the repo
+for s in .claude/skills/*/; do link "${s%/}" ~/"${s%/}"; done
 link .amp/settings.json ~/.config/amp/settings.json
 link .oh-my-zsh/completions ~/.oh-my-zsh/completions
 link .ghostty/config ~/Library/Application\ Support/com.mitchellh.ghostty/config
+
+# KiroCrew rewrites its config files, so pin shared settings via its CLI instead of symlinking
+if command -v kirocrew >/dev/null; then
+  kirocrew config set --local skills.extra_paths "[\"$HOME/.claude/skills\"]"
+  kirocrew config set --local agent.yolo_duration until_shutdown
+  kirocrew config set --local agent.chat_turn_timeout_secs 86400
+  kirocrew config set --local dashboard.prevent_sleep true
+fi
 
 git pull --rebase --autostash || exit 1
 
