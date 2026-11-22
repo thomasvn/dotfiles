@@ -15,7 +15,7 @@ Goal: the same mistake never happens twice. Fix the system, then the code.
    - Missing validation (no test, lint rule, typecheck, or review-persona check would have caught it)
    - Spec gap (the human's spec didn't say)
    - Agent ignored a clear rule (say so plainly; suggest making it a check instead of prose)
-4. **Propose the system fix** — the smallest edit to the doc, rule, skill, test, or check. Prefer an automated check over prose. Show it as a diff. Apply it once the user agrees (for global CLAUDE.md, follow the update-claude-md skill).
+4. **Propose the system fix** — the smallest edit to the doc, rule, skill, test, or check. Prefer an automated check over prose. Show it as a diff. Apply it once the user agrees (for global CLAUDE.md, follow the claude-md skill).
 5. **Then fix the original issue**, and confirm the new check/test catches the old behavior.
 
 Output: ≤10 lines — miss, root cause (quoted source), system fix, code fix status.

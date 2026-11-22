@@ -1,24 +1,42 @@
 ---
-name: slim-claude-md
-description: Slim down a bloated CLAUDE.md or AGENTS.md memory file — cut generic filler, lint-duplicating rules, and task-specific cruft, push detail out to referenced docs (progressive disclosure), and keep it under a screen or two. Use when the user says "slim down CLAUDE.md", "trim my AGENTS.md", "my memory file is too long", "reduce context bloat", or invokes /slim-claude-md. Preserves hard-won project facts; deletes only true noise.
+name: claude-md
+description: Maintain an always-loaded memory file (CLAUDE.md / AGENTS.md) — add or change a rule in the user's system-wide ~/.claude/CLAUDE.md, or slim down a bloated one by cutting generic filler, lint-duplicating rules, and task-specific cruft and pushing detail out to referenced docs (progressive disclosure). Use when the user says "add this to my CLAUDE.md", "save this preference system-wide", "update my AGENTS.md", "remember this globally", "slim down CLAUDE.md", "trim my AGENTS.md", "my memory file is too long", "reduce context bloat", or invokes /claude-md. Preserves hard-won project facts; deletes only true noise.
 ---
 
-# Slim CLAUDE.md
+# CLAUDE.md
 
-Goal: shrink an always-loaded memory file (`CLAUDE.md` / `AGENTS.md`) so it costs less context every
-session, **without losing hard-won project facts**. The file is injected into every prompt, so its
-contents compete for a limited instruction budget — frontier models degrade as input grows, and only
-~150–200 instructions get followed reliably (Claude Code's own prompt already spends ~50). Shorter
-measurably helps; it is not just tidiness.
+A memory file (`CLAUDE.md` / `AGENTS.md`) is injected into every prompt, so each line costs context
+forever. Its contents compete for a limited instruction budget — frontier models degrade as input grows,
+and only ~150–200 instructions get followed reliably (Claude Code's own prompt already spends ~50).
+Shorter measurably helps; it is not just tidiness.
+
+`~/.claude/CLAUDE.md` is a symlink into the dotfiles repo, also loaded as `~/.codex/AGENTS.md`,
+`~/.kiro/steering/AGENTS.md`, and `~/.config/amp/AGENTS.md`. Don't commit unless the user asks.
+
+Pick the mode from the request: **Add a rule** or **Slim a file**.
+
+## Add a rule
+
+Default target: `~/.claude/CLAUDE.md`.
+
+1. Read the file.
+2. Find any existing rule the new preference overlaps or contradicts. Edit that line instead of appending a duplicate.
+3. Write the rule as one terse bullet. Use a short example only if the wording is ambiguous without one.
+   - Good: `- PR titles: under 8 words, no "fix:" style prefixes`
+   - Bad: `- When creating pull requests, please make sure that titles are kept short...`
+4. Place it next to related rules. Use a nested numbered list only when order is the point (e.g. priorities).
+5. Show the user the before/after of changed lines.
+
+## Slim a file
 
 The danger: a naive pass deletes real learnings (a hard-won `kind`+`podman` gotcha, a dated design
 decision) as if they were filler. **Default to relocating detail, not deleting it.** Cut only true noise.
 
-## Inputs
+### Inputs
 - A file path. Default to `CLAUDE.md`, then `AGENTS.md`, in the repo root if none given.
 - If the user names a line-count target, use it. Otherwise aim for **≤ ~200 lines / one–two screens**.
 
-## Procedure
+### Procedure
 
 1. **Read the file. Count lines** (`wc -l`). Note where it sits vs the target. Report the starting number.
 
@@ -56,7 +74,7 @@ decision) as if they were filler. **Default to relocating detail, not deleting i
    - Never silently drop a hard-won fact — if unsure whether something is noise, KEEP it and flag it for
      the user to decide rather than delete it.
 
-## Guardrails
+### Guardrails
 - **Relocation ≠ deletion.** Moving detail to a doc keeps it; deleting it loses it. When torn, relocate.
 - **This file may be a journal of real learnings** (gotchas hit-and-fixed, inverted-on-purpose decisions).
   Those are the highest-value content, not filler — protect them. Terseness ≠ throwing them away.
