@@ -45,7 +45,7 @@ Concise summary up front (root cause, evidence, next steps). Put full details â€
 - Never restate what the diff shows (no before/after of the code). Write only what a reviewer cannot read off it: why, non-obvious constraints, what was verified.
 - When a change alters user-visible output (a message, report, log, UI), show a simple, clean BEFORE / AFTER of that output.
 - Anything beyond those three points (stats, edge-case reasoning, why a risk is fine) goes in a collapsed `<details>` block, never visible prose. Skip feature walkthroughs, overlap tables, and raw command output unless a reviewer needs them.
-- Test evidence must be irrefutable: real commands and output, not claims (e.g. before/after runs, end-to-end tests of the real paths it touches).
+- **Test evidence MUST be IRREFUTABLE**: a skeptical reviewer cannot doubt the change works. Real commands and output, never claims; run the real paths it touches end to end; show the BEFORE failing and the AFTER passing on the same check.
 - Show only the fewest tests that prove the change works; skip what CI catches or what is obvious (syntax checks, file exists).
 - Make each test plain and skimmable, with an obvious BEFORE / AFTER. No summary table or prose recapping tests. Each test is its own `<details>` whose `<summary>` is the result in under 8 words, e.g. `<summary>updateCaTrust: Init:Error â†’ Running</summary>`, with setup, commands and output inside.
 
