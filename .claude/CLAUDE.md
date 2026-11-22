@@ -31,7 +31,7 @@ Concise summary up front (root cause, evidence, next steps). Put full details â€
 
 - Title: plain language, under 8 words, naming the change; no "fix:", "ci:", "break:", "chore:", "feat:" style prefixes
 - Open PRs as drafts. Follow the repo's PR template; if none, use `## Why` and `## Testing`.
-- Agents don't write the PR body; I do, so I understand the change. Every section except Testing is `TODO` for me, followed by a hidden `<!-- -->` comment holding what the agent would have written. Later body edits touch only those comments and Testing. Example:
+- Agents don't write the PR body; I do, so I understand the change. Every section except Testing is `TODO` for me, followed by a hidden `<!-- -->` comment holding what the agent would have written. Later body edits touch only those comments and Testing, and start from the live body (`gh pr view --json body`), never a local copy, so my edits survive. Example:
   ```md
   ## Why
   TODO
