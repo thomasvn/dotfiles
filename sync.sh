@@ -24,7 +24,8 @@ link .ghostty/config ~/Library/Application\ Support/com.mitchellh.ghostty/config
 
 # KiroCrew rewrites its config files, so pin shared settings via its CLI instead of symlinking
 if command -v kirocrew >/dev/null; then
-  kirocrew config set --local skills.extra_paths "[\"$HOME/.claude/skills\"]"
+  # Repo path too: KiroCrew won't follow ~/.claude/skills links that point outside its extra paths
+  kirocrew config set --local skills.extra_paths "[\"$HOME/code/dotfiles/.claude/skills\", \"$HOME/.claude/skills\"]"
   kirocrew config set --local agent.yolo_duration until_shutdown
   kirocrew config set --local agent.chat_turn_timeout_secs 86400
   kirocrew config set --local dashboard.prevent_sleep true
