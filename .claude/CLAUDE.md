@@ -59,4 +59,4 @@ Call out edge cases, but label how likely each is: say plainly when one needs un
 
 # Skills
 
-Create and update skills only in `~/code/dotfiles/.claude/skills/<name>/`, never in `~/.claude/skills/` or `~/.kiro/crew/skills/`. `sync.sh` links them for Claude Code, and KiroCrew reads the repo folder via `skills.extra_paths`.
+Create and update skills only in `~/code/dotfiles/.claude/skills/<name>/`, never in `~/.claude/skills/` or `~/.kiro/crew/skills/`. `sync.sh` links them for Claude Code and Kiro CLI, and KiroCrew reads the repo folder via `skills.extra_paths`.

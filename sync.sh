@@ -19,8 +19,11 @@ link .claude/CLAUDE.md ~/.config/amp/AGENTS.md
 # Per skill, so Claude's account-managed skills/synced stays out of the repo
 # Back up a real skill folder outside skills/, or link()'s .bak copy loads as a duplicate skill
 for s in .claude/skills/*/; do
-  [ -d ~/"${s%/}" ] && [ ! -L ~/"${s%/}" ] && mkdir -p ~/.claude/skills.bak && mv ~/"${s%/}" ~/.claude/skills.bak/
-  link "${s%/}" ~/"${s%/}"
+  name=$(basename "$s")
+  for dir in ~/.claude/skills ~/.kiro/skills; do # Claude Code, Kiro CLI
+    [ -d "$dir/$name" ] && [ ! -L "$dir/$name" ] && mkdir -p "$dir.bak" && mv "$dir/$name" "$dir.bak/"
+    link "${s%/}" "$dir/$name"
+  done
 done
 link .amp/settings.json ~/.config/amp/settings.json
 link .oh-my-zsh/completions ~/.oh-my-zsh/completions
