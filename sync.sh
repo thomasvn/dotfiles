@@ -17,7 +17,11 @@ link .claude/CLAUDE.md ~/.codex/AGENTS.md
 link .claude/CLAUDE.md ~/.kiro/steering/AGENTS.md
 link .claude/CLAUDE.md ~/.config/amp/AGENTS.md
 # Per skill, so Claude's account-managed skills/synced stays out of the repo
-for s in .claude/skills/*/; do link "${s%/}" ~/"${s%/}"; done
+# Back up a real skill folder outside skills/, or link()'s .bak copy loads as a duplicate skill
+for s in .claude/skills/*/; do
+  [ -d ~/"${s%/}" ] && [ ! -L ~/"${s%/}" ] && mkdir -p ~/.claude/skills.bak && mv ~/"${s%/}" ~/.claude/skills.bak/
+  link "${s%/}" ~/"${s%/}"
+done
 link .amp/settings.json ~/.config/amp/settings.json
 link .oh-my-zsh/completions ~/.oh-my-zsh/completions
 link .ghostty/config ~/Library/Application\ Support/com.mitchellh.ghostty/config

@@ -59,4 +59,4 @@ Call out edge cases, but label how likely each is: say plainly when one needs un
 
 # Skills
 
-Every skill you create or update in `~/.kiro/crew/skills/<name>/` must also be copied to `~/.kiro/skills/<name>/`, so that Kiro CLI can load it too. Keep both copies identical (`diff -r` shows no differences).
+Create and update skills only in `~/code/dotfiles/.claude/skills/<name>/`, never in `~/.claude/skills/` or `~/.kiro/crew/skills/`. `sync.sh` links them for Claude Code, and KiroCrew reads the repo folder via `skills.extra_paths`.
