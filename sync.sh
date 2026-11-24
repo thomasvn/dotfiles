@@ -12,6 +12,7 @@ link() {
 link .zshrc ~/.zshrc
 link .aliases ~/.aliases
 link .vimrc ~/.vimrc
+link .local/bin/kiro-pr ~/.local/bin/kiro-pr
 link .claude/CLAUDE.md ~/.claude/CLAUDE.md
 link .claude/CLAUDE.md ~/.codex/AGENTS.md
 link .claude/CLAUDE.md ~/.kiro/steering/AGENTS.md
