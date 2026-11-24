@@ -1,21 +1,24 @@
 #!/usr/bin/env bash
-# Open a GitHub PR in Kiro for review, checked out the way the GitHub Pull
-# Requests extension expects, so its panel shows the PR and its full diff.
+# Open a GitHub PR in an IDE (Kiro by default) for review, checked out the way the
+# GitHub Pull Requests extension expects, so its panel shows the PR and its full diff.
 #
-#   kiro-pr https://github.com/kubecost/kubecost-cost-model/pull/5248
-#   kiro-pr kubecost/kubecost-cost-model#5248
+#   pr-ide https://github.com/kubecost/kubecost-cost-model/pull/5248
+#   pr-ide kubecost/kubecost-cost-model#5248 Cursor
+#   pr-ide kubecost/kubecost-cost-model#5248 "Visual Studio Code"
 #
 # Creates (or refreshes) a worktree next to your local clone, named
 # <repo>-pr-<n>, on a local branch pr/<n>. Your clone's own checkout is never touched.
 set -euo pipefail
 
-CODE_ROOT="${KIRO_PR_CODE_ROOT:-$HOME/code}"
+CODE_ROOT="${PR_IDE_CODE_ROOT:-$HOME/code}"
 
-[[ $# -eq 1 ]] || { echo "usage: kiro-pr <PR url | owner/repo#n>" >&2; exit 2; }
+[[ $# -eq 1 || $# -eq 2 ]] || { echo "usage: pr-ide <PR url | owner/repo#n> [macOS app name, default Kiro]" >&2; exit 2; }
+app=${2:-Kiro}
+open -Ra "$app" 2>/dev/null || { echo "pr-ide: no app named '$app' (try Kiro, Cursor, \"Visual Studio Code\")" >&2; exit 2; }
 if [[ $1 =~ github\.com/([^/]+)/([^/]+)/pull/([0-9]+) ]] || [[ $1 =~ ^([^/]+)/([^#]+)#([0-9]+)$ ]]; then
   owner=${BASH_REMATCH[1]} repo=${BASH_REMATCH[2]} n=${BASH_REMATCH[3]}
 else
-  echo "kiro-pr: can't parse '$1'; expected a PR URL or owner/repo#n" >&2; exit 2
+  echo "pr-ide: can't parse '$1'; expected a PR URL or owner/repo#n" >&2; exit 2
 fi
 
 # Find the clone whose origin points at this repo. Prefer an exact owner match;
@@ -29,34 +32,34 @@ while IFS= read -r gitdir; do
   fork=${fork:-$dir}
 done < <(find "$CODE_ROOT" -maxdepth 3 -name .git -type d 2>/dev/null)
 clone=${clone:-$fork}
-[[ -n $clone ]] || { echo "kiro-pr: no clone of $owner/$repo under $CODE_ROOT (set KIRO_PR_CODE_ROOT)" >&2; exit 1; }
+[[ -n $clone ]] || { echo "pr-ide: no clone of $owner/$repo under $CODE_ROOT (set PR_IDE_CODE_ROOT)" >&2; exit 1; }
 
 # The extension finds the PR through a remote that points at the base repo
 # (origin in a normal clone, upstream in a fork clone).
 remote=$(git -C "$clone" remote -v | awk -v r="[:/]$owner/$repo(\\.git)?\$" '$2 ~ r {print $1; exit}')
-[[ -n $remote ]] || { echo "kiro-pr: $clone has no remote for $owner/$repo; add one, e.g. git -C $clone remote add upstream git@github.com:$owner/$repo.git" >&2; exit 1; }
+[[ -n $remote ]] || { echo "pr-ide: $clone has no remote for $owner/$repo; add one, e.g. git -C $clone remote add upstream git@github.com:$owner/$repo.git" >&2; exit 1; }
 
 read -r head_ref head_owner < <(gh pr view "$n" -R "$owner/$repo" --json headRefName,headRepositoryOwner --jq '"\(.headRefName) \(.headRepositoryOwner.login)"') \
-  || { echo "kiro-pr: gh pr view $owner/$repo#$n failed (see above)" >&2; exit 1; }
+  || { echo "pr-ide: gh pr view $owner/$repo#$n failed (see above)" >&2; exit 1; }
 branch="pr/$n"
 echo "clone:  $clone (remote $remote)"
 echo "PR:     $owner/$repo#$n (head $head_owner:$head_ref)"
 
-git -C "$clone" fetch --quiet "$remote" "+refs/pull/$n/head:refs/kiro-pr/$n/head"
-head=$(git -C "$clone" rev-parse "refs/kiro-pr/$n/head")
+git -C "$clone" fetch --quiet "$remote" "+refs/pull/$n/head:refs/pr-ide/$n/head"
+head=$(git -C "$clone" rev-parse "refs/pr-ide/$n/head")
 
 # Never throw away review edits or local commits on the PR branch.
 wt="$(dirname "$clone")/$repo-pr-$n"
 if [[ -d $wt ]]; then
   if git -C "$wt" symbolic-ref -q HEAD >/dev/null; then
-    [[ -z $(git -C "$wt" status --porcelain --untracked-files=no) ]] || { echo "kiro-pr: $wt has uncommitted edits; commit, stash or discard them first" >&2; exit 1; }
+    [[ -z $(git -C "$wt" status --porcelain --untracked-files=no) ]] || { echo "pr-ide: $wt has uncommitted edits; commit, stash or discard them first" >&2; exit 1; }
   else
     # Older kiro-pr layout: detached HEAD with the PR staged. Only unstaged edits are yours.
-    git -C "$wt" diff --quiet || { echo "kiro-pr: $wt has unstaged edits; commit, stash or discard them first" >&2; exit 1; }
+    git -C "$wt" diff --quiet || { echo "pr-ide: $wt has unstaged edits; commit, stash or discard them first" >&2; exit 1; }
   fi
 fi
 if git -C "$clone" rev-parse -q --verify "refs/heads/$branch" >/dev/null && ! git -C "$clone" merge-base --is-ancestor "$branch" "$head"; then
-  echo "kiro-pr: $branch has commits that aren't on the PR; push or move them first" >&2; exit 1
+  echo "pr-ide: $branch has commits that aren't on the PR; push or move them first" >&2; exit 1
 fi
 
 if [[ -d $wt ]]; then
@@ -76,4 +79,4 @@ echo "head:   ${head:0:9} on $branch"
 echo "path:   $wt"
 # `open -a` instead of the `kiro` CLI: when run from Kiro Crew, the CLI opened
 # Kiro's home screen without the folder (2026-11-23).
-open -a Kiro "$wt"
+open -a "$app" "$wt"
