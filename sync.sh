@@ -36,6 +36,10 @@ if command -v kirocrew >/dev/null; then
   kirocrew config set --local agent.yolo_duration until_shutdown
   kirocrew config set --local agent.chat_turn_timeout_secs 86400
   kirocrew config set --local dashboard.prevent_sleep true
+  kirocrew config set --local dashboard.verbosity default
+  kirocrew config set --local agent.model claude-opus-5.5
+  kirocrew config set --local telemetry.enabled false
+  kirocrew config set --local telemetry.beacon_enabled false
 fi
 
 git pull --rebase --autostash || exit 1
