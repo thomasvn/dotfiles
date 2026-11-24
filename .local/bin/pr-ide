@@ -63,6 +63,7 @@ fi
 if [[ -d $wt ]]; then
   git -C "$wt" checkout --quiet --force -B "$branch" "$head"
 else
+  git -C "$clone" worktree prune # forget a worktree whose folder was deleted by hand
   git -C "$clone" worktree add --quiet -B "$branch" "$wt" "$head"
 fi
 git -C "$clone" update-ref "refs/pr-ide/$n/head" "$head"
