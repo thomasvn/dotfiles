@@ -45,10 +45,10 @@ branch="pr/$n"
 echo "clone:  $clone (remote $remote)"
 echo "PR:     $owner/$repo#$n (head $head_owner:$head_ref)"
 
-# Head of our last checkout: a pr/<n> still on it has no local commits, even after a force-push.
-old=$(git -C "$clone" rev-parse -q --verify "refs/pr-ide/$n/head" || true)
 git -C "$clone" fetch --quiet "$remote" "refs/pull/$n/head"
 head=$(git -C "$clone" rev-parse FETCH_HEAD)
+# Head of our last checkout: a pr/<n> still on it has no local commits, even after a force-push.
+old=$(git -C "$clone" rev-parse -q --verify "refs/pr-ide/$n/head" || echo "$head")
 
 # Never throw away review edits or local commits on the PR branch.
 wt="$(dirname "$clone")/$repo-pr-$n"
@@ -56,7 +56,7 @@ if [[ -d $wt && -n $(git -C "$wt" status --porcelain --untracked-files=no) ]]; t
   echo "pr-ide: $wt has uncommitted edits; commit, stash or discard them first" >&2; exit 1
 fi
 if git -C "$clone" rev-parse -q --verify "refs/heads/$branch" >/dev/null && ! git -C "$clone" merge-base --is-ancestor "$branch" "$head" \
-  && ! { [[ -n $old ]] && git -C "$clone" merge-base --is-ancestor "$branch" "$old"; }; then
+  && ! git -C "$clone" merge-base --is-ancestor "$branch" "$old"; then
   echo "pr-ide: $branch has commits that aren't on the PR; push or move them first" >&2; exit 1
 fi
 

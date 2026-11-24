@@ -4,6 +4,7 @@
   1. Readability: makes sense on first read; fewer lines, examples over explanation, comments only to explain why (workarounds, non-obvious constraints)
   2. Conciseness: fewer lines of code unless it hurts readability; no clever one-liners that need decoding
   3. Easy to debug and maintain: fail loudly with errors that say what went wrong and where to look; log key decisions (e.g. resolved inputs); make tracing easy to turn on
+- Errors, in order: 1) return them up wrapped with context (`fmt.Errorf("...: %w", err)`); 2) log only where they can't be returned, never in a spammy way (e.g. not once per item or retry); 3) follow the codebase's message format, e.g. a `pkg:` prefix naming where it came from (`log.Errorf("configstore: importing %s: %s", path, err)`)
 - Minimal architecture: no extra abstractions; prefer fewer files, tools, and moving parts; don't create a function, helper, or variable used only once — inline it and comment if the intent needs explaining
 - Use clear, consistent naming
 - **Change as few lines as possible; keep the `git diff` minimal: touch only what the fix needs, no drive-by refactors.**
