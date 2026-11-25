@@ -69,7 +69,7 @@ fi
 git -C "$clone" update-ref "refs/pr-ide/$n/head" "$head"
 
 # Link the branch to the PR the same way the extension's own "Checkout" does.
-git -C "$clone" config "branch.$branch.github-pr-owner-number" "$owner#$repo#$n"
+git -C "$clone" config --replace-all "branch.$branch.github-pr-owner-number" "$owner#$repo#$n"
 if [[ $head_owner == "$owner" ]]; then
   git -C "$clone" fetch --quiet "$remote" "+refs/heads/$head_ref:refs/remotes/$remote/$head_ref"
   git -C "$wt" branch --quiet --set-upstream-to "$remote/$head_ref" "$branch"
